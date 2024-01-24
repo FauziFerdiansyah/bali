@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" crossorigin="anonymous" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+    <title>Itinerary - BALI</title>
+  </head>
+  <body>
+    <main class="container">
+      <div class="section-top">
+        <section class="header-area">
+          <div class="top-header">
+            <h1 class="header-title">Timeline Itinerary</h1>
+            <div class="data-clock">
+              <div id="jam">Loading</div>
+              <div class="part-hour">WITA</div>
+            </div>
+          </div>
+          <p>Susunan perjalanan di Bali.</p>
+        </section>
+
+        <section class="tab-area">
+          <div class="tab-container">
+            <div class="tab-item active-tab" data-day="friday">Jumat</div>
+            <div class="tab-item" data-day="saturday">Sabtu</div>
+            <div class="tab-item" data-day="sunday">Minggu</div>
+            <div class="tab-item" data-day="monday">Senin</div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script>
+      $(function () {
+        moment.locale("id", {
+          timezone: "Asia/Jakarta",
+        });
+
+        setInterval(function () {
+          const now = moment();
+          now.add(1, "hours");
+          $("#jam").text(now.format("HH:mm:ss"));
+        }, 1000);
+
+        $(".tab-item").click(function () {
+          $(".tab-item").removeClass("active-tab");
+
+          $(this).addClass("active-tab");
+
+          var selectedDay = $(this).data("day");
+
+          $(".timeline-area").remove();
+
+          var selectedDayData = activitiesData.find(
+            (dayData) => dayData.day === selectedDay
+          );
+          $(".container").append(generateDayHTML(selectedDayData));
+        });
+
+        const activitiesData = [
+          {
+            day: "friday",
+            date: "05-01-2024",
+            activities: [
+              {
+                type: "go",
+                title: "Penerbangan ke Bali",
+                startTime: "09:20",
+                endTime: "12:10",
+                symbol: "travel",
+              },
+              {
+                type: "arrived",
+                title: "Tiba di bandara I Gusti Ngurah Rai Bali",
+                desc: "Sholat & menunggu penjemputan sewa mobil",
+                startTime: "12:10",
+                endTime: "13:00",
+                symbol: "flight_land",
+              },
+              {
+                type: "event",
+                title: "Jam Makan Siang",
+                desc: "Nasi Pedas Bu Andika (Kuta)",
+                startTime: "13:00",
+                endTime: "14:00",
+                symbol: "restaurant",
+              },
+              {
+                type: "rest",
+                title: "Di Hotel",
+                desc: "Sholat Dzuhur dan persiapan barang-barang",
+                startTime: "14:00",
+                endTime: "16:00",
+                symbol: "hotel",
+              },
+              {
+                type: "event",
+                title: "Menikmati Sunset di La Plancha",
+                startTime: "16:00",
+                endTime: "18:30",
+                symbol: "wb_twilight",
+              },
+              {
+                type: "go",
+                title: "Sholat Maghrib di Mesjid Terdekat",
+                startTime: "18:30",
+                endTime: "19:00",
+                symbol: "prayer_times",
+              },
+              {
+                type: "event",
+                title: "Atlas Beach Club",
+                startTime: "19:00",
+                endTime: "22:00",
+                symbol: "nightlife",
+              },
+            ],
+          },
+          {
+            day: "saturday",
+            date: "06-01-2024",
+            activities: [
+              {
+                type: "rest",
+                title: "Sholat Subuh",
+                desc: "Persiapan ke desa panglipur",
+                startTime: "04:30",
+                endTime: "05:00",
+                symbol: "prayer_times",
+              },
+              {
+                type: "arrived",
+                title: "Di Desa Panglipur",
+                startTime: "05:00",
+                endTime: "08:00",
+                symbol: "holiday_village",
+              },
+              {
+                type: "go",
+                title: "Perjalanan ke Pura Tirta Empul",
+                startTime: "08:00",
+                endTime: "08:45",
+                symbol: "directions_car",
+              },
+              {
+                type: "arrived",
+                title: "Di Pura Tirta Empul",
+                startTime: "08:45",
+                endTime: "09:45",
+                symbol: "temple_hindu",
+              },
+              {
+                type: "go",
+                title: "Perjalanan Ceking Rice Terrace",
+                startTime: "09:45",
+                endTime: "10:00",
+                symbol: "directions_car",
+              },
+              {
+                type: "arrived",
+                title: "Ceking Rice Terrace",
+                startTime: "10:00",
+                endTime: "10:30",
+                symbol: "directions_car",
+              },
+              {
+                type: "go",
+                title: "Perjalanan ke Bebek Tepi Sawah (Ubud)",
+                startTime: "10:30",
+                endTime: "11:00",
+                symbol: "directions_car",
+              },
+              {
+                type: "event",
+                title: "Makan Siang",
+                desc: "Sekalian makan siang di Bebek Tepi sawah Ubud",
+                startTime: "11:00",
+                endTime: "12:00",
+                symbol: "restaurant",
+              },
+              {
+                type: "go",
+                title: "Perjalanan ke Pandawa / Melasti Beach",
+                startTime: "12:00",
+                endTime: "14:30",
+                symbol: "directions_car",
+              },
+              {
+                type: "arrived",
+                title: "Explore Pantai Pandawa / Melasti Beach",
+                startTime: "14:30",
+                endTime: "16:30",
+                symbol: "beach_access",
+              },
+              {
+                type: "go",
+                title: "Perjalanan ke Uluwatu",
+                startTime: "16:30",
+                endTime: "17:30",
+                symbol: "directions_car",
+              },
+              {
+                type: "arrived",
+                title: "Nonton Tari Kecak di Uluwatu",
+                startTime: "17:30",
+                endTime: "20:00",
+                symbol: "festival",
+              },
+              {
+                type: "event",
+                title: "Balik ke Hotel",
+                desc: "Sekalian cari makan",
+                startTime: "20:00",
+                endTime: "22:30",
+                symbol: "flatware",
+              },
+            ],
+          },
+          {
+            day: "sunday",
+            date: "07-01-2024",
+            activities: [
+              {
+                type: "rest",
+                title: "Sholat Subuh",
+                startTime: "04:30",
+                endTime: "05:00",
+                symbol: "prayer_times",
+              },
+              {
+                type: "go",
+                title: "Perjalanan ke Pelabuhan Sanur",
+                desc: "Sekalian cari makan sarapan",
+                startTime: "05:00",
+                endTime: "07:30",
+                symbol: "directions_car",
+              },
+              {
+                type: "arrived",
+                title: "Trip Nusa Peninda",
+                startTime: "07:30",
+                endTime: "18:00",
+                symbol: "houseboat",
+              },
+              {
+                type: "event",
+                title: "Ke Pelabuhan Sanur - Hotel",
+                desc: "Cari makan malam + oleh - oleh",
+                startTime: "19:00",
+                endTime: "22:00",
+                symbol: "redeem",
+              },
+            ],
+          },
+          {
+            day: "monday",
+            date: "08-01-2024",
+            activities: [
+              {
+                type: "rest",
+                title: "Sholat Subuh",
+                startTime: "05:00",
+                endTime: "06:00",
+                symbol: "prayer_times",
+              },
+              {
+                type: "go",
+                title: "Perjalanan Ke Bandara I Gusti Ngurah Rai Bali",
+                startTime: "09:00",
+                endTime: "12:00",
+                symbol: "directions_car",
+              },
+            ],
+          },
+        ];
+
+        function generateActivityHTML(activity) {
+          return `
+            <div class="time-info ${activity.type}">
+              <span class="material-symbols-outlined symbol"> ${
+                activity.symbol
+              } </span>
+              <div class="time-desc">
+                <h2 class="title-timeline">${activity.title}</h2>
+                ${
+                  activity.desc
+                    ? `<div class="desc-timeline">${activity.desc}</div>`
+                    : ""
+                }
+                <div class="clock-timeline">${
+                  activity.startTime
+                } - ${activity.endTime} WITA</div>
+              </div>
+            </div>
+          `;
+        }
+
+        function generateDayHTML(dayData) {
+          const dayActivitiesHTML = dayData.activities
+            .map(generateActivityHTML)
+            .join("");
+          return `
+            <section class="timeline-area">
+              <div class="time-block">${dayActivitiesHTML}</div>
+            </section>
+          `;
+        }
+
+        var initialActiveTab = $(".tab-item.active-tab").data("day");
+        var initialDayData = activitiesData.find(
+          (dayData) => dayData.day === initialActiveTab
+        );
+        $(".container").append(generateDayHTML(initialDayData));
+      });
+    </script>
+  </body>
+</html>

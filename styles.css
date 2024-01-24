@@ -1,0 +1,312 @@
+/* Import Font From Google */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap");
+/* Root Variabel */
+:root {
+  --yellow: #ffbd12;
+  --light-yellow: #fff4cc;
+  --green: #00c6ae;
+  --light-green: #d6fcf7;
+  --red: #f95a2c;
+  --light-red: #ffe8e8;
+  --blue: #1947e5;
+  --light-blue: #b3dbfc;
+  --pink: #ff9692;
+  --light-pink: #ffc7de;
+  --white: #ffffff;
+  --black: #18191f;
+  --light-black: #474a57;
+}
+/* Initial */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  display: block;
+  font-family: "Montserrat", sans-serif;
+  color: var(--black);
+}
+body {
+  margin: auto;
+}
+
+.container {
+  width: 100%;
+  max-width: 500px;
+  margin: 0px auto;
+  padding: 0px 15px;
+}
+.section-top {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0px;
+  padding: 0px 15px 5px;
+  background-color: white;
+  z-index: 1;
+}
+.header-area,
+.tab-container {
+  max-width: 500px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.header-area {
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.data-clock {
+  width: 70px;
+}
+.part-hour {
+  font-size: 10px;
+  text-align: right;
+  padding-right: 17%;
+}
+.header-title {
+  font-weight: 800;
+  margin: 0px;
+  font-size: 27px;
+}
+#jam {
+  font-weight: 600;
+}
+.header-area p {
+  margin-top: 2px;
+}
+
+.tab-area {
+  margin-top: 25px;
+}
+.tab-container {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid var(--black);
+  border-radius: 26px;
+  overflow: scroll;
+}
+.tab-container::-webkit-scrollbar {
+  display: none;
+}
+.tab-item {
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 26px;
+}
+.tab-item.active-tab {
+  color: var(--white);
+  font-weight: 800;
+  border-radius: 26px;
+  position: relative;
+  background-color: var(--blue);
+}
+
+/* .tab-item.active-tab:before {
+  content: "";
+  background-color: var(--blue);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  left: 0;
+  top: 0;
+  border-radius: 26px;
+} */
+
+.timeline-area {
+  margin-top: 175px;
+  position: relative;
+}
+.time-block:before {
+  content: "";
+  width: 9px;
+  height: 2px;
+  background-color: var(--light-black);
+  position: absolute;
+  left: 22px;
+  top: 0px;
+  border-radius: 8px;
+}
+.time-block:after {
+  content: "";
+  width: 9px;
+  height: 2px;
+  background-color: var(--light-black);
+  position: absolute;
+  left: 22px;
+  bottom: 0px;
+  border-radius: 8px;
+}
+.time-block {
+  border-left: 3px dashed var(--light-black);
+  margin-left: 25px;
+  padding-left: 30px;
+}
+.time-info {
+  border: 2px solid var(--light-black);
+  padding: 10px 15px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 0px 0px #18191f;
+  margin-bottom: 25px;
+}
+.symbol {
+  border: 1px solid var(--light-black);
+  border-radius: 8px;
+  padding: 2px;
+  position: absolute;
+  left: 12px;
+  width: 30px;
+  background-color: white;
+  text-align: center;
+  color: var(--light-black);
+}
+.clock-timeline {
+  font-size: 12px;
+  background-color: var(--white);
+  display: inline-block;
+  padding: 3px 8px;
+  font-weight: 500;
+  border-radius: 20px;
+  color: var(--light-black);
+  border: 1px solid var(--light-black);
+  margin-top: 5px;
+}
+
+.go.time-info {
+  box-shadow: 0px 2px 0px 0px var(--red);
+  border-color: var(--red);
+}
+.go .symbol {
+  color: var(--red);
+  background-color: var(--light-red);
+  border-color: var(--red);
+}
+.go .title-timeline {
+  color: var(--red);
+}
+.go .symbol {
+  box-shadow: 0px 2px 0px 0px var(--red);
+}
+
+.go.actived .title-timeline,
+.go.actived .desc-timeline {
+  color: var(--white);
+}
+.go.actived.time-info {
+  background-color: var(--red);
+  border-color: var(--black);
+  box-shadow: 0px 2px 0px 0px var(--black);
+}
+.go.actived .clock-timeline {
+  background-color: var(--light-red);
+}
+
+.arrived.time-info {
+  box-shadow: 0px 2px 0px 0px var(--blue);
+  border-color: var(--blue);
+}
+.arrived .symbol {
+  color: var(--blue);
+  background-color: var(--light-blue);
+  border-color: var(--blue);
+}
+.arrived .title-timeline {
+  color: var(--blue);
+}
+.arrived .symbol {
+  box-shadow: 0px 2px 0px 0px var(--blue);
+}
+
+.arrived.actived .title-timeline,
+.arrived.actived .desc-timeline {
+  color: var(--white);
+}
+.arrived.actived.time-info {
+  background-color: var(--blue);
+  border-color: var(--black);
+  box-shadow: 0px 2px 0px 0px var(--black);
+}
+.arrived.actived .clock-timeline {
+  background-color: var(--light-blue);
+}
+
+.rest.time-info {
+  box-shadow: 0px 2px 0px 0px var(--green);
+  border-color: var(--green);
+}
+.rest .symbol {
+  color: var(--green);
+  background-color: var(--light-green);
+  border-color: var(--green);
+}
+.rest .title-timeline {
+  color: var(--green);
+}
+.rest .symbol {
+  box-shadow: 0px 2px 0px 0px var(--green);
+}
+
+.rest.actived .title-timeline,
+.rest.actived .desc-timeline {
+  color: var(--white);
+}
+.rest.actived.time-info {
+  background-color: var(--green);
+  border-color: var(--black);
+  box-shadow: 0px 2px 0px 0px var(--black);
+}
+.rest.actived .clock-timeline {
+  background-color: var(--light-green);
+}
+
+.event.time-info {
+  box-shadow: 0px 2px 0px 0px var(--yellow);
+  border-color: var(--yellow);
+}
+.event .symbol {
+  color: var(--yellow);
+  background-color: var(--light-yellow);
+  border-color: var(--yellow);
+}
+.event .title-timeline {
+  color: var(--yellow);
+}
+.event .symbol {
+  box-shadow: 0px 2px 0px 0px var(--yellow);
+}
+
+.event.actived .title-timeline,
+.event.actived .desc-timeline {
+  color: var(--white);
+}
+.event.actived.time-info {
+  background-color: var(--yellow);
+  border-color: var(--black);
+  box-shadow: 0px 2px 0px 0px var(--black);
+}
+.event.actived .clock-timeline {
+  background-color: var(--light-yellow);
+}
+
+.title-timeline {
+  font-weight: 700;
+  margin: 0px;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.desc-timeline {
+  font-size: 12px;
+  padding: 0px 0px 5px;
+  font-weight: 500;
+}
