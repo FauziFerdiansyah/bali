@@ -27,7 +27,7 @@
 
         <section class="tab-area">
           <div class="tab-container">
-            <div class="tab-item active-tab" data-day="friday">Jumat</div>
+            <div class="tab-item" data-day="friday">Jumat</div>
             <div class="tab-item" data-day="saturday">Sabtu</div>
             <div class="tab-item" data-day="sunday">Minggu</div>
             <div class="tab-item" data-day="monday">Senin</div>
@@ -44,11 +44,52 @@
           timezone: "Asia/Jakarta",
         });
 
+        const isCurrentDay = moment()
+          .add(1, "hours")
+          .format("dddd")
+          .toLowerCase();
+
+        $(".tab-item").each(function () {
+          const tabDay = $(this).data("day");
+          if (isCurrentDay === tabDay) {
+            $(this).addClass("active-tab");
+          }
+        });
+
+        const check = $(".tab-item.active-tab");
+
         setInterval(function () {
-          const now = moment();
-          now.add(1, "hours");
-          $("#jam").text(now.format("HH:mm:ss"));
+          const currentTime = moment().add(1, "hours");
+          $("#jam").text(currentTime.format("HH:mm:ss"));
         }, 1000);
+        if (check.length > 0) {
+          setInterval(function () {
+            const currentTime = moment().add(1, "hours");
+            const currentDay = currentTime.format("dddd").toLowerCase();
+            $(".time-info").removeClass("active");
+
+            $(".time-info").each(function () {
+              const startTime = moment(
+                currentTime.format("YYYY-MM-DD") +
+                  " " +
+                  $(this).data("start-time"),
+                "YYYY-MM-DD HH:mm"
+              );
+              const endTime = moment(
+                currentTime.format("YYYY-MM-DD") +
+                  " " +
+                  $(this).data("end-time"),
+                "YYYY-MM-DD HH:mm"
+              );
+
+              if (currentDay == $(".time-info").attr("data-day")) {
+                if (currentTime.isBetween(startTime, endTime)) {
+                  $(this).addClass("actived");
+                }
+              }
+            });
+          }, 1000);
+        }
 
         $(".tab-item").click(function () {
           $(".tab-item").removeClass("active-tab");
@@ -284,42 +325,53 @@
 
         function generateActivityHTML(activity) {
           return `
-            <div class="time-info ${activity.type}">
-              <span class="material-symbols-outlined symbol"> ${
-                activity.symbol
-              } </span>
-              <div class="time-desc">
-                <h2 class="title-timeline">${activity.title}</h2>
-                ${
-                  activity.desc
-                    ? `<div class="desc-timeline">${activity.desc}</div>`
-                    : ""
-                }
-                <div class="clock-timeline">${
-                  activity.startTime
-                } - ${activity.endTime} WITA</div>
-              </div>
-            </div>
-          `;
+    <div class="time-info ${
+      activity.type
+    } ${activity.type === "actived" ? "actived" : ""}" data-start-time="${activity.startTime}" data-end-time="${activity.endTime}" data-day="${activity.day}">
+      <span class="material-symbols-outlined symbol">${activity.symbol}</span>
+      <div class="time-desc">
+        <h2 class="title-timeline">${activity.title}</h2>
+        ${
+          activity.desc
+            ? `<div class="desc-timeline">${activity.desc}</div>`
+            : ""
+        }
+        <div class="clock-timeline">${
+          activity.startTime
+        } - ${activity.endTime} WITA</div>
+      </div>
+    </div>
+  `;
         }
 
         function generateDayHTML(dayData) {
           const dayActivitiesHTML = dayData.activities
-            .map(generateActivityHTML)
+            .map((activity) => {
+              // Tambahkan informasi hari ke dalam setiap kegiatan
+              activity.day = dayData.day;
+              return generateActivityHTML(activity);
+            })
             .join("");
+
           return `
-            <section class="timeline-area">
-              <div class="time-block">${dayActivitiesHTML}</div>
-            </section>
-          `;
+    <section class="timeline-area">
+      <div class="time-block">${dayActivitiesHTML}</div>
+    </section>
+  `;
         }
 
-        var initialActiveTab = $(".tab-item.active-tab").data("day");
-        var initialDayData = activitiesData.find(
-          (dayData) => dayData.day === initialActiveTab
-        );
-        $(".container").append(generateDayHTML(initialDayData));
+        if ($(".tab-item.active-tab").length > 0) {
+          var initialActiveTab = $(".tab-item.active-tab").data("day");
+          var initialDayData = activitiesData.find(
+            (dayData) => dayData.day === initialActiveTab
+          );
+          $(".container").append(generateDayHTML(initialDayData));
+        }
       });
+
+      // $(document).ready(function () {
+      //   setActiveTab();
+      // });
     </script>
   </body>
 </html>
