@@ -45,7 +45,6 @@
         });
 
         const isCurrentDay = moment()
-          .add(1, "hours")
           .format("dddd")
           .toLowerCase();
 
@@ -59,12 +58,12 @@
         const check = $(".tab-item.active-tab");
 
         setInterval(function () {
-          const currentTime = moment().add(1, "hours");
+          const currentTime = moment();
           $("#jam").text(currentTime.format("HH:mm:ss"));
         }, 1000);
         if (check.length > 0) {
           setInterval(function () {
-            const currentTime = moment().add(1, "hours");
+            const currentTime = moment();
             const currentDay = currentTime.format("dddd").toLowerCase();
             $(".time-info").removeClass("active");
 
